@@ -59,22 +59,18 @@ export const createUserOrder = inngest.createFunction(
         batchEvents: {
             maxSize: 5,
             timeout: '5s'
-        },
-        triggers: [{ event: 'order/created' }] // ✅ Moved inside the first argument
+        }
     },
-    // ✅ Second argument is now the handler function
-    async ({ events, step }) => {
-        const orders = events.map((event) => {
-            return {
-                userId: event.data.userId,
-                items: event.data.items,
-                amount: event.data.amount,
-                address: event.data.address,
-                date: event.data.date
-            }
-        })
+    { event: 'order/created' }, // ✅ trigger as second argument
+    async ({ events, step }) => { // ✅ handler as third argument
+        const orders = events.map((event) => ({
+            userId: event.data.userId,
+            items: event.data.items,
+            amount: event.data.amount,
+            address: event.data.address,
+            date: event.data.date
+        }))
 
-        // Wrap the database call in step.run() for automatic retries
         await step.run("Save orders to MongoDB", async () => {
             await connectDB()
             await Order.insertMany(orders)
