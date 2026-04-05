@@ -3,22 +3,28 @@ import {NextResponse} from "next/server";
 import Product from "@/modals/Product";
 import {inngest} from "@/config/inngest";
 import User from "@/modals/User";
-
+import connectDB from "@/config/db"; // ✅ Added missing import
 
 export async function POST(request){
     try {
         const {userId} = getAuth(request)
-        const {address, items}= await request.json();
+        const {address, items} = await request.json();
 
-        if(!address || items.length ===0){
+        if(!address || items.length === 0){
             return NextResponse.json({success: false, message:'Invalid data'});
         }
 
-        //calculate amount using items
-        const amount = await items.reduce(async(acc,items)=>{
-            const product= await Product.findById(item.product);
-            return acc + product.offerPrice * item.quantity;
-        },0)
+        // ✅ Connect to MongoDB first!
+        await connectDB();
+
+        // ✅ Fixed the calculation logic to properly await database calls
+        let amount = 0;
+        for (const item of items) {
+            const product = await Product.findById(item.product);
+            if (product) {
+                amount += product.offerPrice * item.quantity;
+            }
+        }
 
         await inngest.send({
             name: 'order/created',
@@ -26,20 +32,21 @@ export async function POST(request){
                 userId,
                 address,
                 items,
-                amount: amount + Math.floor(amount*0.02),
+                amount: amount + Math.floor(amount * 0.02),
                 date: Date.now()
             }
         })
 
         const user = await User.findById(userId);
-        user.cartItems={}
-        await user.save();
+        if (user) {
+            user.cartItems = {}
+            await user.save();
+        }
+
         return NextResponse.json({success: true, message:'Order Placed'});
 
     }catch(error){
         console.log(error);
         return NextResponse.json({success: false, message: error.message});
-
     }
-
 }

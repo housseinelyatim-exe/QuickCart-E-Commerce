@@ -1,9 +1,7 @@
-import { addressDummyData } from "@/assets/assets";
 import { useAppContext } from "@/context/AppContext";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import product from "@/modals/Product";
 
 const OrderSummary = () => {
 
@@ -48,7 +46,7 @@ const OrderSummary = () => {
       }
 
       const token = await getToken();
-      const {data} = await axios.post('/api/orders/create',{
+      const {data} = await axios.post('/api/order/create',{
         address: selectedAddress._id,
         items: cartItemsArray
       },{headers:{Authorization:`Bearer ${token}`}});
