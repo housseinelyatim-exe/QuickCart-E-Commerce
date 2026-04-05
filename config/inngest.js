@@ -59,9 +59,10 @@ export const createUserOrder = inngest.createFunction(
         batchEvents: {
             maxSize: 5,
             timeout: '5s'
-        }
+        },
+        triggers: [{ event: 'order/created' }] // ✅ Moved inside the first argument
     },
-    { event: 'order/created' },
+    // ✅ Second argument is now the handler function
     async ({ events, step }) => {
         const orders = events.map((event) => {
             return {
