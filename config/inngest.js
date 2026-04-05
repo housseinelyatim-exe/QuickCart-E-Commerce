@@ -69,13 +69,16 @@ export const createUserOrder = inngest.createFunction(
                 items: event.data.items,
                 amount: event.data.amount,
                 address: event.data.address,
-                date: event.data.date // Fixed from data.data to data.date
+                date: event.data.date
             }
         })
 
-        await connectDB()
-        await Order.insertMany(orders)
-        return {success: true, processed: orders.length}
+        // Wrap the database call in step.run() for automatic retries
+        await step.run("Save orders to MongoDB", async () => {
+            await connectDB()
+            await Order.insertMany(orders)
+        })
 
+        return { success: true, processed: orders.length }
     }
 )
