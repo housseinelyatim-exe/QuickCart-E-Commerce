@@ -1,18 +1,19 @@
 import {getAuth} from "@clerk/nextjs/server";
+import Address from "@/modals/Adsress";
 import connectDB from "@/config/db";
-import User from "@/modals/User";
 import {NextResponse} from "next/server";
 
 
 export async function POST(request){
     try{
-        const {userId} = getAuth(request);
-        const {cartData} =await request.json();
+
+        const {userId} = getAuth(request)
+        const address = await request.json()
         await connectDB()
-        const user = await User.findById(userId);
-        user.cartItems = cartData;
-        await user.save();
-        return NextResponse.json({success:true});
+        const newAddress = await Address.create({...address,userId})
+
+        return NextResponse.json({success:true, message:"address added successfully.", newAddress})
+
     }catch(error){
         return NextResponse.json({success:false, message: error.message});
     }
