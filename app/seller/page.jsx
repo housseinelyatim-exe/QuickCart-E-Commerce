@@ -48,7 +48,6 @@ const AddProduct = () => {
       toast.error(error.message);
     }
 
-    const {data} = await axios.post('/api/product/add', formData,{});
   };
 
   return (

@@ -55,7 +55,7 @@ export const AppContextProvider = (props) => {
             }
             setUserData(userDummyData)
         }catch(error){
-            toast.error(data.message)
+            toast.error(error.message)
         }
     }
 
@@ -69,6 +69,7 @@ export const AppContextProvider = (props) => {
             cartData[itemId] = 1;
         }
         setCartItems(cartData);
+        toast.success("Item added to cart")
 
     }
 
