@@ -1,69 +1,18 @@
-# QuickCart - A simple eCommerce website
+# QuickCart 🛒
 
-QuickCart is an open-source **Next.js eCommerce frontend** project.  
-It provides a modern, fast and customizable shopping UI.  
-This repo is **frontend only** – contributors can improve the design, add new pages, animations and more.
+QuickCart is a personal project I built to practice and showcase my skills in developing a modern web application frontend. It is a responsive eCommerce UI that simulates a digital storefront, complete with user authentication and state management.
 
----
-
-## Features
-
--   Built with **Next.js + Tailwind CSS**
--   Responsive design
--   Reusable components
--   Customizable layouts and colors
--   Open for contributions (UI/UX, animations, themes, layouts etc.)
+I created this project to dive deeper into React frameworks, utility-first CSS, and integrating third-party authentication services.
 
 ---
 
-## Getting Started
+## 🛠️ Tools & Tech Stack
 
-1. Clone the repo
+Here are the main technologies I used to build this project:
 
-    ```bash
-    git clone https://github.com/GreatStackDev/QuickCart.git
-    cd QuickCart
-    ```
-
-2. Install dependencies
-
-    ```bash
-    npm install
-    ```
-
-3. Run locally
-
-    ```bash
-    npm run dev
-    ```
+- **[Next.js](https://nextjs.org/)**: Used as the core React framework for routing and rendering the application.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Used for all the styling to keep the design responsive and the CSS maintainable.
+- **[Clerk](https://clerk.com/)**: Integrated to handle user authentication (sign up, login, and session management).
+- **[React Hot Toast](https://react-hot-toast.com/)**: Used to trigger simple, elegant notification popups when actions are taken (like adding an item to the cart).
 
 ---
-
-## Contributing
-
-We welcome all kinds of contributions! You can:
-
-- Create new pages
-- Improve layouts
-- Add animations and transitions
-- Enhance responsiveness
-- Refactor components
-- Suggest new UI/UX ideas
-- Add themes or color variations
-- Introduce accessibility improvements
-- Add filtering/search features
-- Improve documentation
-
-Check out [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
----
-
-## License
-
-This project is licensed under the **MIT License**.
-
----
-
-## 🌟 Contributors
-
-Thanks to everyone who contributes to **QuickCart**!
